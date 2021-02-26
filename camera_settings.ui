@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Camera_Settings</class>
+ <widget class="QWidget" name="Camera_Settings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>200</y>
+     <width>120</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>深度相机分辨率</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>100</y>
+     <width>120</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>彩色相机分辨率</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>250</y>
+     <width>120</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>深度相机帧率</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>150</y>
+     <width>120</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>彩色相机帧率</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_depth_resolution">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>200</y>
+     <width>120</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>640*480</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>320*240</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="comboBox_color_resolution">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>100</y>
+     <width>120</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="currentText">
+    <string>640*480</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>1280*720</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>640*480</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>320*240</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QPushButton" name="pushButton_apply">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>350</y>
+     <width>90</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>应 用</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_1">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>50</y>
+     <width>120</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>彩色摄像头编号</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox_color_index">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>50</y>
+     <width>60</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="currentText">
+    <string>0</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>0</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>1</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>2</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="comboBox_color_fps">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>150</y>
+     <width>120</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="currentText">
+    <string>30fps</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>30fps</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>10fps</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="comboBox_depth_fps">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>250</y>
+     <width>120</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="currentText">
+    <string>30fps</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>30fps</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>10fps</string>
+    </property>
+   </item>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -32,7 +32,7 @@
    <string>AstraView</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label_rgb">
+   <widget class="QLabel" name="label_color">
     <property name="geometry">
      <rect>
       <x>1080</x>
@@ -66,7 +66,7 @@ border:0.5px solid black </string>
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_open_rgbd">
+   <widget class="QPushButton" name="pushButton_show_color">
     <property name="geometry">
      <rect>
       <x>100</x>
@@ -76,33 +76,7 @@ border:0.5px solid black </string>
      </rect>
     </property>
     <property name="text">
-     <string>rgbd相机</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_d2c">
-    <property name="geometry">
-     <rect>
-      <x>1300</x>
-      <y>1020</y>
-      <width>120</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>深度图对齐</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_open_ir">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>1020</y>
-      <width>120</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>ir相机</string>
+     <string>彩色相机</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_ir">
@@ -132,7 +106,7 @@ border:0.5px solid black </string>
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_show_cloud">
+   <widget class="QPushButton" name="pushButton_show_points">
     <property name="geometry">
      <rect>
       <x>1500</x>
@@ -148,7 +122,7 @@ border:0.5px solid black </string>
    <widget class="QPushButton" name="pushButton_save_depth">
     <property name="geometry">
      <rect>
-      <x>500</x>
+      <x>700</x>
       <y>1020</y>
       <width>120</width>
       <height>30</height>
@@ -158,10 +132,10 @@ border:0.5px solid black </string>
      <string>保存深度图</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_save_rgb">
+   <widget class="QPushButton" name="pushButton_save_color">
     <property name="geometry">
      <rect>
-      <x>700</x>
+      <x>900</x>
       <y>1020</y>
       <width>120</width>
       <height>30</height>
@@ -174,7 +148,7 @@ border:0.5px solid black </string>
    <widget class="QPushButton" name="pushButton_save_ir">
     <property name="geometry">
      <rect>
-      <x>900</x>
+      <x>1100</x>
       <y>1020</y>
       <width>120</width>
       <height>30</height>
@@ -184,10 +158,10 @@ border:0.5px solid black </string>
      <string>保存红外图</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_save_cloud">
+   <widget class="QPushButton" name="pushButton_save_points">
     <property name="geometry">
      <rect>
-      <x>1100</x>
+      <x>1300</x>
       <y>1020</y>
       <width>120</width>
       <height>30</height>
@@ -195,6 +169,32 @@ border:0.5px solid black </string>
     </property>
     <property name="text">
      <string>保存点云</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_show_depth">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>1020</y>
+      <width>120</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>深度相机</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_show_ir">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>1020</y>
+      <width>120</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>红外相机</string>
     </property>
    </widget>
   </widget>
@@ -211,38 +211,32 @@ border:0.5px solid black </string>
     <property name="title">
      <string>    显示    </string>
     </property>
-    <addaction name="action_show_rgbd"/>
+    <addaction name="action_show_color"/>
+    <addaction name="action_show_depth"/>
     <addaction name="action_show_ir"/>
-    <addaction name="action_show_cloud"/>
+    <addaction name="action_show_points"/>
    </widget>
    <widget class="QMenu" name="save">
     <property name="title">
      <string>    保存    </string>
     </property>
     <addaction name="action_save_depth"/>
-    <addaction name="action_save_rgb"/>
+    <addaction name="action_save_color"/>
     <addaction name="action_save_ir"/>
-    <addaction name="action_save_cloud"/>
-   </widget>
-   <widget class="QMenu" name="menu">
-    <property name="title">
-     <string>工具</string>
-    </property>
-    <addaction name="action_d2c"/>
+    <addaction name="action_save_points"/>
    </widget>
    <addaction name="camera"/>
    <addaction name="save"/>
-   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="action_show_rgbd">
+  <action name="action_show_color">
    <property name="text">
-    <string>rgbd</string>
+    <string>彩色图 </string>
    </property>
   </action>
   <action name="action_show_ir">
    <property name="text">
-    <string>ir</string>
+    <string>红外图</string>
    </property>
   </action>
   <action name="action_save_depth">
@@ -253,7 +247,7 @@ border:0.5px solid black </string>
     <string>D</string>
    </property>
   </action>
-  <action name="action_save_rgb">
+  <action name="action_save_color">
    <property name="text">
     <string>彩色图</string>
    </property>
@@ -274,7 +268,7 @@ border:0.5px solid black </string>
     <string>深度图对齐</string>
    </property>
   </action>
-  <action name="action_save_cloud">
+  <action name="action_save_points">
    <property name="text">
     <string>点云</string>
    </property>
@@ -282,18 +276,23 @@ border:0.5px solid black </string>
     <string>C</string>
    </property>
   </action>
-  <action name="action_show_cloud">
+  <action name="action_show_points">
    <property name="text">
     <string>点云</string>
+   </property>
+  </action>
+  <action name="action_show_depth">
+   <property name="text">
+    <string>深度图</string>
    </property>
   </action>
  </widget>
  <resources/>
  <connections>
   <connection>
-   <sender>action_show_rgbd</sender>
+   <sender>action_show_color</sender>
    <signal>triggered()</signal>
-   <receiver>pushButton_open_rgbd</receiver>
+   <receiver>pushButton_show_color</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -307,25 +306,9 @@ border:0.5px solid black </string>
    </hints>
   </connection>
   <connection>
-   <sender>action_show_ir</sender>
+   <sender>action_save_points</sender>
    <signal>triggered()</signal>
-   <receiver>pushButton_open_ir</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1459</x>
-     <y>1055</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_save_cloud</sender>
-   <signal>triggered()</signal>
-   <receiver>pushButton_save_cloud</receiver>
+   <receiver>pushButton_save_points</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -339,9 +322,9 @@ border:0.5px solid black </string>
    </hints>
   </connection>
   <connection>
-   <sender>action_save_rgb</sender>
+   <sender>action_save_color</sender>
    <signal>triggered()</signal>
-   <receiver>pushButton_save_rgb</receiver>
+   <receiver>pushButton_save_color</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -387,9 +370,9 @@ border:0.5px solid black </string>
    </hints>
   </connection>
   <connection>
-   <sender>action_show_cloud</sender>
+   <sender>action_show_points</sender>
    <signal>triggered()</signal>
-   <receiver>pushButton_show_cloud</receiver>
+   <receiver>pushButton_show_points</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -403,9 +386,9 @@ border:0.5px solid black </string>
    </hints>
   </connection>
   <connection>
-   <sender>action_d2c</sender>
+   <sender>action_show_depth</sender>
    <signal>triggered()</signal>
-   <receiver>pushButton_d2c</receiver>
+   <receiver>pushButton_show_depth</receiver>
    <slot>click()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -413,7 +396,23 @@ border:0.5px solid black </string>
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>1359</x>
+     <x>349</x>
+     <y>1055</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_show_ir</sender>
+   <signal>triggered()</signal>
+   <receiver>pushButton_show_ir</receiver>
+   <slot>click()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>559</x>
      <y>1055</y>
     </hint>
    </hints>

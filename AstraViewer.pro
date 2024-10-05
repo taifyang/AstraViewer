@@ -33,8 +33,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 
-INCLUDEPATH +=  E:/BaiduNetdiskDownload/AstraSDK-v2.1.1-24f74b8b15-20200424T114650Z-vs2015-win64/include
-LIBS += E:/BaiduNetdiskDownload/AstraSDK-v2.1.1-24f74b8b15-20200424T114650Z-vs2015-win64/lib/*.lib
+#INCLUDEPATH +=  E:/BaiduNetdiskDownload/AstraSDK-v2.1.1-24f74b8b15-20200424T114650Z-vs2015-win64/include
+#LIBS += E:/BaiduNetdiskDownload/AstraSDK-v2.1.1-24f74b8b15-20200424T114650Z-vs2015-win64/lib/*.lib
 
-#LIBS += D:/software/OpenCV4.9.0/opencv/build/x64/vc16/lib/*.lib/
-#INCLUDEPATH += D:/software/OpenCV4.9.0/opencv/build/include
+INCLUDEPATH += D:/software/OpenCV4.9.0/opencv/build/include
+LIBS += D:/software/OpenCV4.9.0/opencv/build/x64/vc16/lib/*.lib
+
+INCLUDEPATH += E:/BaiduNetdiskDownload/OpenNI_v2.3.0.85_20220615_1b09bbfd_windows_x64_x86_release/samples/samples/ThirdParty/OpenNI2/Include
+LIBS += E:/BaiduNetdiskDownload/OpenNI_v2.3.0.85_20220615_1b09bbfd_windows_x64_x86_release/samples/samples/ThirdParty/OpenNI2/windows/x64-Release/*.lib
+

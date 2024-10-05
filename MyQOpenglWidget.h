@@ -95,14 +95,14 @@ private:
     QVector4D m_backgroundColor;
 
 	//store points
-	QVector<VertexInfo> m_PointsVertex;				
+    QVector<VertexInfo> m_PointsVertex;
+
     BoundingBox m_box;
    
     QVector3D m_lineMove;
     QQuaternion m_rotate;
 	QVector3D m_rotationAxis;
     float m_scale;
-
     QVector2D m_lastPoint;
 
     GLuint createGPUProgram(QString nVertexShaderFile, QString nFragmentShaderFile);

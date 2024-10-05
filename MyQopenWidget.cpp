@@ -65,7 +65,7 @@ void MyQOpenglWidget::calculateBoundingBox(const std::vector<PointXYZRGB> &cloud
 {
     float x_max=INT_MIN, y_max=INT_MIN, z_max=INT_MIN;
     float x_min=INT_MAX, y_min=INT_MAX, z_min=INT_MAX;
-    for(int i = 0;i<cloud.size();i++)
+    for(size_t i = 0; i<cloud.size(); i++)
     {
         if(cloud[i].x>x_max)    x_max=cloud[i].x;
         if(cloud[i].x<x_min)    x_min=cloud[i].x;
@@ -95,7 +95,7 @@ void MyQOpenglWidget::initPointCloud(const std::vector<PointXYZRGB> &cloud)
 
     calculateBoundingBox(cloud);
 
-    for(int i = 0;i<cloud.size();i++)
+    for(size_t i = 0; i<cloud.size(); i++)
     {
         //move cloud center to origin
         m_PointsVertex[i].pos[0] = cloud[i].x;
@@ -395,11 +395,9 @@ QVector3D MyQOpenglWidget::pixelPosToViewPos(const QVector2D &p)
     QVector3D viewPos(2.0 * float(p.x()) / width() - 1.0,  1.0 - 2.0 * float(p.y()) / height(), 0);
     float sqrZ = 1 - QVector3D::dotProduct(viewPos, viewPos);
     if(sqrZ>0)
-    {
         viewPos.setZ(std::sqrt(sqrZ));
-    }else{
+    else
         viewPos.normalize();
-    }
     return viewPos;
 }
 

@@ -1,4 +1,4 @@
-#include "MyQOpenglWidget.h"
+#include "myqopenglwidget.h"
 #include <QtMath>
 
 static const char *vertexShaderSource =

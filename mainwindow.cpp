@@ -1,14 +1,18 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "image_utils.h"
 
-const float camera_factor = 1.0;
+const int frame_width = 640;
+const int frame_height = 480;
+const float camera_factor = 1000.0;
 const float camera_cx = 311.0;
 const float camera_cy = 244.0;
 const float camera_fx = 593.0;
 const float camera_fy = 588.0;
 QMutex g_mutex_color, g_mutex_depth;
 QWaitCondition g_wait_color, g_wait_depth;
-cv::Mat g_color, g_depth, g_ir;
+uint8_t* g_color = new uint8_t[frame_width * frame_height * 3];
+uint16_t* g_depth = new uint16_t[frame_width * frame_height];
 std::vector<PointXYZRGB> g_points;
 
 MainWindow::MainWindow(QWidget *parent)
@@ -22,6 +26,7 @@ MainWindow::MainWindow(QWidget *parent)
     points_generate = new PointsGenerate;
     connect(points_generate, &PointsGenerate::send_points, this, &MainWindow::show_points);
 
+    uvsSwapper.UvcInit();
     openni::OpenNI::initialize();
 
     timer_color = new QTimer(this);
@@ -45,7 +50,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_show_color_clicked()
 {
-    capture.open(0);
+    uvsSwapper.UVCStreamStart(640, 480, OB_PIXEL_FORMAT_YUV422, 30);
     timer_color->start(100);
 }
 
@@ -66,7 +71,6 @@ void MainWindow::on_pushButton_show_ir_clicked()
     timer_ir->start(100);
 }
 
-
 void PointsGenerate::run()
 {
     while(true)
@@ -77,22 +81,22 @@ void PointsGenerate::run()
         g_wait_depth.wait(&g_mutex_depth);
 
         g_points.clear();
-        for (int i = 0; i < g_depth.rows; ++i)
+        uint8_t* p_color = g_color;
+        uint16_t* p_depth = g_depth;
+        for (int i = 0; i < frame_height; ++i)
         {
-            uchar* depthData = g_depth.data + i*g_depth.step;
-            uchar* colorData = g_color.data + i*g_color.step;
-            for (int j = 0; j < g_depth.cols; ++j)
+            for (int j = 0; j < frame_width; ++j)
             {
-                if (depthData == 0)
+                if (p_depth == 0)
                     continue;
 
                 PointXYZRGB point;
-                point.z = double(*(depthData++)) / camera_factor;
+                point.z = double(*(p_depth++)) / camera_factor;
                 point.x = (j - camera_cx) * point.z / camera_fx;
-                point.y = -(i - camera_cy) * point.z / camera_fy;
-                point.b = *(colorData++);
-                point.g = *(colorData++);
-                point.r = *(colorData++);
+                point.y = (i - camera_cy) * point.z / camera_fy;
+                point.b = *(p_color++);
+                point.g = *(p_color++);
+                point.r = *(p_color++);
                 g_points.push_back(point);
             }
         }
@@ -110,11 +114,16 @@ void MainWindow::on_pushButton_show_points_clicked()
 
 void MainWindow::show_color()
 {
-    capture >> g_color;
-    cv::flip(g_color, g_color, 1);
+    uint8_t* uvc = new uint8_t[frame_width * frame_height * 2];
+    memset(uvc, 0, frame_width * frame_height * 2);
+    uint32_t nSize = 0;
+    uint32_t nImageType = 0;
+    uvsSwapper.WaitUvcStream(uvc, nSize, nImageType, 1000);
+    memset(g_color, 0, frame_width * frame_height * 3);
+    convertYUV422ToRGB888(uvc, g_color, frame_width, frame_height);
+    delete []  uvc;
     g_wait_color.wakeAll();
-
-    image_color = QImage((const uchar*)g_color.data, g_color.cols, g_color.rows, QImage::Format_RGB888).rgbSwapped();
+    image_color = rgbToQImage(g_color, frame_width, frame_height).rgbSwapped();
     ui->label_color->clear();
     ui->label_color->setPixmap(QPixmap::fromImage(image_color));
 }
@@ -136,14 +145,10 @@ void MainWindow::show_depth()
     }
 
     auto depth = depth_frame.getData();
-    auto width = depth_frame.getWidth();
-    auto height = depth_frame.getHeight();
-
-    cv::Mat rawMat(height, width, CV_16UC1, (void*)depth);
-    rawMat.convertTo(g_depth, CV_8UC1, 255.0 / max_depth);
+    std::copy((uint16_t*)depth, (uint16_t*)depth + frame_width * frame_height, g_depth);
     g_wait_depth.wakeAll();
 
-    image_depth = QImage((const uchar*)g_depth.data, g_depth.cols, g_depth.rows, QImage::Format_Grayscale8);
+    image_depth = Map16ToQImage((const uint16_t*)depth, frame_width, frame_height, 255.0 / max_depth);
     ui->label_depth->clear();
     ui->label_depth->setPixmap(QPixmap::fromImage(image_depth));
 }
@@ -165,14 +170,9 @@ void MainWindow::show_ir()
     }
 
     auto ir = ir_frame.getData();
-    auto width = ir_frame.getWidth();
-    auto height = ir_frame.getHeight();
-
-    cv::Mat rawMat(height, width, CV_16UC1, (void*)ir);
-    rawMat.convertTo(g_ir, CV_8UC1, 255.0 / max_ir);
     g_wait_depth.wakeAll();
 
-    image_ir = QImage((const uchar*)g_ir.data, g_ir.cols, g_ir.rows, QImage::Format_Grayscale8);
+    image_ir = Map16ToQImage((const uint16_t*)ir, frame_width, frame_height, 255.0 / max_ir);
     ui->label_ir->clear();
     ui->label_ir->setPixmap(QPixmap::fromImage(image_ir));
 }

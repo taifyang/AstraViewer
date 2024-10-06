@@ -69,7 +69,7 @@ border:0.5px solid black </string>
    <widget class="QPushButton" name="pushButton_show_color">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>300</x>
       <y>1020</y>
       <width>120</width>
       <height>30</height>
@@ -174,7 +174,7 @@ border:0.5px solid black </string>
    <widget class="QPushButton" name="pushButton_show_depth">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>100</x>
       <y>1020</y>
       <width>120</width>
       <height>30</height>
@@ -211,8 +211,8 @@ border:0.5px solid black </string>
     <property name="title">
      <string>    显示    </string>
     </property>
-    <addaction name="action_show_color"/>
     <addaction name="action_show_depth"/>
+    <addaction name="action_show_color"/>
     <addaction name="action_show_ir"/>
     <addaction name="action_show_points"/>
    </widget>

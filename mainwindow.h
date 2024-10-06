@@ -11,10 +11,14 @@
 #include <QFile>
 #include <QTextStream>
 
-#include <opencv2/opencv.hpp>
 #include <OpenNI.h>
+#include <UVC_Swapper.h>
+#include <UVCSwapper.h>
+#include <OBTypes.h>
+#include <ObCommon.h>
 
-#include "MyQOpenglWidget.h"
+
+#include "myqopenglwidget.h"
 
 extern std::vector<PointXYZRGB> g_points;
 
@@ -75,7 +79,9 @@ private:
 
     PointsGenerate* points_generate;
 
-    cv::VideoCapture capture;
+    UVC_Swapper uvsSwapper;
+
+    //cv::VideoCapture capture;
 
     openni::Device device;
 

@@ -15,7 +15,6 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 
-
 QT_BEGIN_NAMESPACE
 class QPainter;
 class QOpenGLContext;

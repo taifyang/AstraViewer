@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "image_utils.h"
+#include "utils.h"
 
 const int frame_width = 640;
 const int frame_height = 480;
@@ -48,13 +48,13 @@ MainWindow::~MainWindow()
     openni::OpenNI::shutdown();
 }
 
-void MainWindow::on_pushButton_show_color_clicked()
+void MainWindow::on_action_show_color_triggered()
 {
     uvsSwapper.UVCStreamStart(640, 480, OB_PIXEL_FORMAT_YUV422, 30);
     timer_color->start(100);
 }
 
-void MainWindow::on_pushButton_show_depth_clicked()
+void MainWindow::on_action_show_depth_triggered()
 {
     device.open(openni::ANY_DEVICE);
     device.setImageRegistrationMode(openni::IMAGE_REGISTRATION_DEPTH_TO_COLOR);
@@ -63,7 +63,7 @@ void MainWindow::on_pushButton_show_depth_clicked()
     timer_depth->start(100);
 }
 
-void MainWindow::on_pushButton_show_ir_clicked()
+void MainWindow::on_action_show_ir_triggered()
 {
     device.open(openni::ANY_DEVICE);
     stream_ir.create(device, openni::SENSOR_IR);
@@ -107,7 +107,7 @@ void PointsGenerate::run()
     }
 }
 
-void MainWindow::on_pushButton_show_points_clicked()
+void MainWindow::on_action_show_points_triggered()
 {
     points_generate->start();
 }
@@ -182,22 +182,22 @@ void MainWindow::show_points()
     openglwidget->showPointCloud(g_points);
 }
 
-void MainWindow::on_pushButton_save_color_clicked()
+void MainWindow::on_action_save_color_triggered()
 {
     image_color.save(QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + "_color.png");
 }
 
-void MainWindow::on_pushButton_save_depth_clicked()
+void MainWindow::on_action_save_depth_triggered()
 {
     image_depth.save(QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + "_depth.png");
 }
 
-void MainWindow::on_pushButton_save_ir_clicked()
+void MainWindow::on_action_save_ir_triggered()
 {
     image_ir.save(QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + "_ir.png");
 }
 
-void MainWindow::on_pushButton_save_points_clicked()
+void MainWindow::on_action_save_points_triggered()
 {
     if(g_points.empty()) return;
     QFile file(QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + "_points.txt");

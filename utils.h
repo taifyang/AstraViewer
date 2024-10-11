@@ -1,5 +1,5 @@
-#ifndef IMAGE_UTILS_H
-#define IMAGE_UTILS_H
+#ifndef UTILS_H
+#define UTILS_H
 
 #include <QImage>
 
@@ -55,7 +55,7 @@ QImage rgbToQImage(const uint8_t* data, int width, int height)
         for (int x = 0; x < width; ++x)
         {
             int index = (y * width + x) * 3;
-            image.setPixel(x, y, qRgb(data[index], data[index + 1], data[index + 2]));
+            image.setPixel(x, y, qRgb(data[index + 2], data[index + 1], data[index]));
         }
     }
     return image;
@@ -76,4 +76,4 @@ QImage Map16ToQImage(const uint16_t* data, int width, int height, float ratio)
     return image;
 }
 
-#endif // IMAGE_UTILS_H
+#endif // UTILS_H

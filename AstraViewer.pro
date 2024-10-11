@@ -21,9 +21,9 @@ SOURCES += \
     myqopenglwidget.cpp
 
 HEADERS += \
-    image_utils.h \
     mainwindow.h \
-    myqopenglwidget.h
+    myqopenglwidget.h \
+    utils.h
 
 FORMS += \
     mainwindow.ui

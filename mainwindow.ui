@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>AstraView</string>
+   <string>AstraViewer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label_color">
@@ -66,19 +66,6 @@ border:0.5px solid black </string>
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_show_color">
-    <property name="geometry">
-     <rect>
-      <x>300</x>
-      <y>1020</y>
-      <width>120</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>彩色相机</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_ir">
     <property name="geometry">
      <rect>
@@ -104,97 +91,6 @@ border:0.5px solid black </string>
       <width>640</width>
       <height>480</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_show_points">
-    <property name="geometry">
-     <rect>
-      <x>1500</x>
-      <y>1020</y>
-      <width>120</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>显示点云</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_save_depth">
-    <property name="geometry">
-     <rect>
-      <x>700</x>
-      <y>1020</y>
-      <width>120</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>保存深度图</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_save_color">
-    <property name="geometry">
-     <rect>
-      <x>900</x>
-      <y>1020</y>
-      <width>120</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>保存彩色图</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_save_ir">
-    <property name="geometry">
-     <rect>
-      <x>1100</x>
-      <y>1020</y>
-      <width>120</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>保存红外图</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_save_points">
-    <property name="geometry">
-     <rect>
-      <x>1300</x>
-      <y>1020</y>
-      <width>120</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>保存点云</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_show_depth">
-    <property name="geometry">
-     <rect>
-      <x>100</x>
-      <y>1020</y>
-      <width>120</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>深度相机</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton_show_ir">
-    <property name="geometry">
-     <rect>
-      <x>500</x>
-      <y>1020</y>
-      <width>120</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>红外相机</string>
     </property>
    </widget>
   </widget>
@@ -288,134 +184,5 @@ border:0.5px solid black </string>
   </action>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>action_show_color</sender>
-   <signal>triggered()</signal>
-   <receiver>pushButton_show_color</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>459</x>
-     <y>1055</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_save_points</sender>
-   <signal>triggered()</signal>
-   <receiver>pushButton_save_points</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1159</x>
-     <y>1055</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_save_color</sender>
-   <signal>triggered()</signal>
-   <receiver>pushButton_save_color</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>759</x>
-     <y>1055</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_save_depth</sender>
-   <signal>triggered()</signal>
-   <receiver>pushButton_save_depth</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>559</x>
-     <y>1055</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_save_ir</sender>
-   <signal>triggered()</signal>
-   <receiver>pushButton_save_ir</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>959</x>
-     <y>1055</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_show_points</sender>
-   <signal>triggered()</signal>
-   <receiver>pushButton_show_points</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1559</x>
-     <y>1055</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_show_depth</sender>
-   <signal>triggered()</signal>
-   <receiver>pushButton_show_depth</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>349</x>
-     <y>1055</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_show_ir</sender>
-   <signal>triggered()</signal>
-   <receiver>pushButton_show_ir</receiver>
-   <slot>click()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>559</x>
-     <y>1055</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

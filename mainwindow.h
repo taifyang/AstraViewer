@@ -17,7 +17,6 @@
 #include <OBTypes.h>
 #include <ObCommon.h>
 
-
 #include "myqopenglwidget.h"
 
 extern std::vector<PointXYZRGB> g_points;
@@ -48,13 +47,21 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_show_color_clicked();
+    void on_action_show_color_triggered();
 
-    void on_pushButton_show_depth_clicked();
+    void on_action_show_depth_triggered();
 
-    void on_pushButton_show_ir_clicked();
+    void on_action_show_ir_triggered();
 
-    void on_pushButton_show_points_clicked();
+    void on_action_show_points_triggered();
+
+    void on_action_save_color_triggered();
+
+    void on_action_save_depth_triggered();
+
+    void on_action_save_ir_triggered();
+
+    void on_action_save_points_triggered();
 
     void show_color();
 
@@ -63,14 +70,6 @@ private slots:
     void show_ir();
 
     void show_points();
-
-    void on_pushButton_save_color_clicked();
-
-    void on_pushButton_save_depth_clicked();
-
-    void on_pushButton_save_ir_clicked();
-
-    void on_pushButton_save_points_clicked();
 
 private:
     Ui::MainWindow *ui;

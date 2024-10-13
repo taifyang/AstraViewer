@@ -9,6 +9,7 @@ const float camera_cx = 311.0;
 const float camera_cy = 244.0;
 const float camera_fx = 593.0;
 const float camera_fy = 588.0;
+
 QMutex g_mutex_color, g_mutex_depth;
 QWaitCondition g_wait_color, g_wait_depth;
 uint8_t* g_color = new uint8_t[frame_width * frame_height * 3];
@@ -20,8 +21,6 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    openglwidget = new MyQOpenglWidget(ui->openGLWidget);
-    openglwidget->resize(ui->openGLWidget->width(),ui->openGLWidget->height());
 
     points_generate = new PointsGenerate;
     connect(points_generate, &PointsGenerate::send_points, this, &MainWindow::show_points);
@@ -50,6 +49,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_action_show_color_triggered()
 {
+    uvsSwapper.UVCStreamStart(640, 480, OB_PIXEL_FORMAT_YUV422, 30);
     uvsSwapper.UVCStreamStart(640, 480, OB_PIXEL_FORMAT_YUV422, 30);
     timer_color->start(100);
 }
@@ -118,14 +118,15 @@ void MainWindow::show_color()
     memset(uvc, 0, frame_width * frame_height * 2);
     uint32_t nSize = 0;
     uint32_t nImageType = 0;
-    uvsSwapper.WaitUvcStream(uvc, nSize, nImageType, 1000);
+    uvsSwapper.WaitUvcStream(uvc, nSize, nImageType, 3000);
+
     memset(g_color, 0, frame_width * frame_height * 3);
     convertYUV422ToRGB888(uvc, g_color, frame_width, frame_height);
-    delete []  uvc;
     g_wait_color.wakeAll();
+    delete []  uvc;
+
     image_color = rgbToQImage(g_color, frame_width, frame_height).rgbSwapped();
-    ui->label_color->clear();
-    ui->label_color->setPixmap(QPixmap::fromImage(image_color));
+    ui->openGLWidget_color->setPixmap(QPixmap::fromImage(image_color));
 }
 
 void MainWindow::show_depth()
@@ -138,19 +139,12 @@ void MainWindow::show_depth()
     openni::Status ops = openni::OpenNI::waitForAnyStream(&pstream, 1, &changedStreamDummy, 1000);
     ops = stream_depth.readFrame(&depth_frame);
 
-    if (ops != openni::STATUS_OK)
-    {
-        timer_depth->stop();
-        return;
-    }
-
     auto depth = depth_frame.getData();
     std::copy((uint16_t*)depth, (uint16_t*)depth + frame_width * frame_height, g_depth);
     g_wait_depth.wakeAll();
 
     image_depth = Map16ToQImage((const uint16_t*)depth, frame_width, frame_height, 255.0 / max_depth);
-    ui->label_depth->clear();
-    ui->label_depth->setPixmap(QPixmap::fromImage(image_depth));
+    ui->openGLWidget_depth->setPixmap(QPixmap::fromImage(image_depth));
 }
 
 void MainWindow::show_ir()
@@ -163,38 +157,37 @@ void MainWindow::show_ir()
     openni::Status ops = openni::OpenNI::waitForAnyStream(&pstream, 1, &changedStreamDummy, 1000);
     ops = stream_ir.readFrame(&ir_frame);
 
-    if (ops != openni::STATUS_OK)
-    {
-        timer_ir->stop();
-        return;
-    }
-
     auto ir = ir_frame.getData();
     g_wait_depth.wakeAll();
 
     image_ir = Map16ToQImage((const uint16_t*)ir, frame_width, frame_height, 255.0 / max_ir);
-    ui->label_ir->clear();
-    ui->label_ir->setPixmap(QPixmap::fromImage(image_ir));
+    ui->openGLWidget_ir->setPixmap(QPixmap::fromImage(image_ir));
 }
 
 void MainWindow::show_points()
 {
-    openglwidget->showPointCloud(g_points);
+    ui->openGLWidget_points->showPointCloud(g_points);
 }
 
 void MainWindow::on_action_save_color_triggered()
 {
+    if(image_color.isNull())    return;
     image_color.save(QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + "_color.png");
+    ui->statusBar->showMessage(QString("彩色图像保存成功"), 1000);
 }
 
 void MainWindow::on_action_save_depth_triggered()
 {
+    if(image_depth.isNull())    return;
     image_depth.save(QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + "_depth.png");
+    ui->statusBar->showMessage(QString("深度图像保存成功"), 1000);
 }
 
 void MainWindow::on_action_save_ir_triggered()
 {
+    if(image_ir.isNull())   return;
     image_ir.save(QDateTime::currentDateTime().toString("yyyyMMdd_hhmmss") + "_ir.png");
+    ui->statusBar->showMessage(QString("红外图像保存成功"), 1000);
 }
 
 void MainWindow::on_action_save_points_triggered()
@@ -211,5 +204,6 @@ void MainWindow::on_action_save_points_triggered()
         }
         file.close();
     }
+    ui->statusBar->showMessage(QString("点云保存成功"), 1000);
 }
 

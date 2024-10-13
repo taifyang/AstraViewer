@@ -1,4 +1,4 @@
-#include "myqopenglwidget.h"
+#include "cloudwidget.h"
 #include <QtMath>
 
 static const char *vertexShaderSource =
@@ -17,7 +17,7 @@ static const char *fragmentShaderSource =
     "   gl_FragColor = col;\n"
     "}\n";
 
-MyQOpenglWidget::MyQOpenglWidget(QWidget *parent)
+CloudWidget::CloudWidget(QWidget *parent)
     : QOpenGLWidget(parent)
     ,m_context(NULL)
     ,m_Program(NULL)
@@ -38,7 +38,7 @@ MyQOpenglWidget::MyQOpenglWidget(QWidget *parent)
     this->grabKeyboard();
 }
 
-MyQOpenglWidget::~MyQOpenglWidget()
+CloudWidget::~CloudWidget()
 {
     if(m_context)
     {
@@ -53,7 +53,7 @@ MyQOpenglWidget::~MyQOpenglWidget()
     m_PointsVertex.clear();
 }
 
-void MyQOpenglWidget::showPointCloud(const std::vector<PointXYZRGB> &cloud)
+void CloudWidget::showPointCloud(const std::vector<PointXYZRGB> &cloud)
 {
     initPointCloud(cloud);
     changePointCloud();
@@ -61,7 +61,7 @@ void MyQOpenglWidget::showPointCloud(const std::vector<PointXYZRGB> &cloud)
     repaint();
 }
 
-void MyQOpenglWidget::calculateBoundingBox(const std::vector<PointXYZRGB> &cloud)
+void CloudWidget::calculateBoundingBox(const std::vector<PointXYZRGB> &cloud)
 {
     float x_max=INT_MIN, y_max=INT_MIN, z_max=INT_MIN;
     float x_min=INT_MAX, y_min=INT_MAX, z_min=INT_MAX;
@@ -88,7 +88,7 @@ void MyQOpenglWidget::calculateBoundingBox(const std::vector<PointXYZRGB> &cloud
     m_box.centerPoint = centerPoint;
 }
 
-void MyQOpenglWidget::initPointCloud(const std::vector<PointXYZRGB> &cloud)
+void CloudWidget::initPointCloud(const std::vector<PointXYZRGB> &cloud)
 {
     m_PointsVertex.clear();
     m_PointsVertex.resize((int)cloud.size());
@@ -108,7 +108,7 @@ void MyQOpenglWidget::initPointCloud(const std::vector<PointXYZRGB> &cloud)
     }
 }
 
-void MyQOpenglWidget::gray2Pseudocolor(const PointXYZRGB pos,float color[4])
+void CloudWidget::gray2Pseudocolor(const PointXYZRGB pos,float color[4])
 {
     color[0] = pos.r *1.0f/255;
     color[1] = pos.g *1.0f/255;
@@ -116,7 +116,7 @@ void MyQOpenglWidget::gray2Pseudocolor(const PointXYZRGB pos,float color[4])
     color[3] = 1.0f;
 }
 
-void MyQOpenglWidget::changePointCloud()
+void CloudWidget::changePointCloud()
 {
     if(m_PointsVertex.size()<=0)
     {
@@ -135,7 +135,7 @@ void MyQOpenglWidget::changePointCloud()
     OpenGLCore->glBindVertexArray(0);
 }
 
-void MyQOpenglWidget::ResetView()
+void CloudWidget::ResetView()
 {
     m_lineMove = QVector3D();
     m_rotate = QQuaternion(); 
@@ -144,19 +144,19 @@ void MyQOpenglWidget::ResetView()
     m_scale = 1.0f;
 }
 
-void MyQOpenglWidget::setBackgroundColor(QVector3D color)
+void CloudWidget::setBackgroundColor(QVector3D color)
 {
     m_backgroundColor= QVector4D(color, 1.0f);
 }
 
-void MyQOpenglWidget::resizeGL(int w, int h)
+void CloudWidget::resizeGL(int w, int h)
 {
     const qreal retinaScale = devicePixelRatio();
     glViewport(0, 0, w * retinaScale, h * retinaScale);
     repaint();
 }
 
-void MyQOpenglWidget::initializeGL()
+void CloudWidget::initializeGL()
 {
     bool binit = true;
 	binit &= InitShader();
@@ -178,7 +178,7 @@ void MyQOpenglWidget::initializeGL()
     m_Timer->start(50);
 }
 
-bool MyQOpenglWidget::InitShader()
+bool CloudWidget::InitShader()
 {
     m_Program = new QOpenGLShaderProgram(this);
     bool success = true;
@@ -189,14 +189,14 @@ bool MyQOpenglWidget::InitShader()
     return success;
 }
 
-void MyQOpenglWidget::GetShaderUniformPara()
+void CloudWidget::GetShaderUniformPara()
 {
     m_posAttr = m_Program->attributeLocation("posAttr");
     m_colAttr = m_Program->attributeLocation("colAttr");  
     m_matrixUniform = m_Program->uniformLocation("matrix");
 }
 
-void MyQOpenglWidget::paintGL()
+void CloudWidget::paintGL()
 {
     m_Program->bind();
     glClearColor(m_backgroundColor.x(), m_backgroundColor.y(), m_backgroundColor.z(), m_backgroundColor.w());
@@ -211,7 +211,7 @@ void MyQOpenglWidget::paintGL()
     m_Program->release();
 }
 
-void MyQOpenglWidget::setMatrixUniform()
+void CloudWidget::setMatrixUniform()
 {
     QMatrix4x4 matrix = QMatrix4x4();
     QMatrix4x4 matrixPerspect= QMatrix4x4();;
@@ -235,7 +235,7 @@ void MyQOpenglWidget::setMatrixUniform()
     m_Program->setUniformValue(m_matrixUniform, matrix);
 }
 
-void MyQOpenglWidget::initCloud()
+void CloudWidget::initCloud()
 {
     m_PointsVertex.clear();
     VertexInfo point;
@@ -252,7 +252,7 @@ void MyQOpenglWidget::initCloud()
     m_PointsVertex.push_back(point);
 }
 
-void MyQOpenglWidget::onTimerOut()
+void CloudWidget::onTimerOut()
 {
     if(this->isVisible())
     {
@@ -260,7 +260,7 @@ void MyQOpenglWidget::onTimerOut()
     }
 }
 
-void MyQOpenglWidget::mousePressEvent(QMouseEvent *e)
+void CloudWidget::mousePressEvent(QMouseEvent *e)
 {
 	if (e->buttons()&Qt::LeftButton || e->buttons()&Qt::MidButton)
 	{
@@ -269,7 +269,7 @@ void MyQOpenglWidget::mousePressEvent(QMouseEvent *e)
 	}   
 }
 
-void MyQOpenglWidget::mouseMoveEvent(QMouseEvent *e)
+void CloudWidget::mouseMoveEvent(QMouseEvent *e)
 {	
     if (e->buttons()&Qt::LeftButton)
     {
@@ -282,12 +282,12 @@ void MyQOpenglWidget::mouseMoveEvent(QMouseEvent *e)
     m_lastPoint = QVector2D(e->localPos());
 }
 
-void MyQOpenglWidget::mouseReleaseEvent(QMouseEvent *e)
+void CloudWidget::mouseReleaseEvent(QMouseEvent *e)
 {
     setMouseTracking(false);
 }
 
-void MyQOpenglWidget::wheelEvent(QWheelEvent *e)
+void CloudWidget::wheelEvent(QWheelEvent *e)
 {   
     if(e->delta() > 0){
         modelZoomInOrOut(true);
@@ -296,7 +296,7 @@ void MyQOpenglWidget::wheelEvent(QWheelEvent *e)
     }
 }
 
-void MyQOpenglWidget::keyPressEvent(QKeyEvent *e)
+void CloudWidget::keyPressEvent(QKeyEvent *e)
 {
     if (e->key() == Qt::Key_R)
     {
@@ -306,17 +306,17 @@ void MyQOpenglWidget::keyPressEvent(QKeyEvent *e)
     QWidget::keyPressEvent(e);
 }
 
-void MyQOpenglWidget::leaveEvent(QEvent *)
+void CloudWidget::leaveEvent(QEvent *)
 {
     releaseKeyboard();
 }
 
-void MyQOpenglWidget::enterEvent(QEvent *)
+void CloudWidget::enterEvent(QEvent *)
 {
     grabKeyboard();
 }
 
-GLuint MyQOpenglWidget::createGPUProgram(QString nVertexShaderFile, QString nFragmentShaderFile)
+GLuint CloudWidget::createGPUProgram(QString nVertexShaderFile, QString nFragmentShaderFile)
 {
     m_VertexShader = new QOpenGLShader(QOpenGLShader::Vertex);
     bool isOK = m_VertexShader->compileSourceFile(nVertexShaderFile);
@@ -345,7 +345,7 @@ GLuint MyQOpenglWidget::createGPUProgram(QString nVertexShaderFile, QString nFra
     return m_Program->programId();
 }
 
-void MyQOpenglWidget::LineMove(QVector2D posOrgin, QVector2D posEnd)
+void CloudWidget::LineMove(QVector2D posOrgin, QVector2D posEnd)
 {
     float ratio = 1.0f;
     float xoffset = posEnd.x() - posOrgin.x();
@@ -355,7 +355,7 @@ void MyQOpenglWidget::LineMove(QVector2D posOrgin, QVector2D posEnd)
     m_lineMove.setY(m_lineMove.y()-yoffset*ratio);
 }
 
-void MyQOpenglWidget::Rotate(QVector2D posOrgin, QVector2D posEnd)
+void CloudWidget::Rotate(QVector2D posOrgin, QVector2D posEnd)
 {
 	QVector2D diff = posEnd - posOrgin;
 	qreal acc = diff.length() / 100.0;
@@ -366,7 +366,7 @@ void MyQOpenglWidget::Rotate(QVector2D posOrgin, QVector2D posEnd)
     calRotation(posOrgin,posEnd);
 }
 
-void MyQOpenglWidget::modelZoomInOrOut(bool ZoomInOrOut)
+void CloudWidget::modelZoomInOrOut(bool ZoomInOrOut)
 {
     if(ZoomInOrOut)//zoom in
     {
@@ -378,7 +378,7 @@ void MyQOpenglWidget::modelZoomInOrOut(bool ZoomInOrOut)
     }
 }
 
-void MyQOpenglWidget::calRotation(QVector2D posOrgin, QVector2D posEnd)
+void CloudWidget::calRotation(QVector2D posOrgin, QVector2D posEnd)
 {
     QVector3D orginViewPos = pixelPosToViewPos(posOrgin);
     QVector3D endViewPos = pixelPosToViewPos(posEnd);
@@ -390,7 +390,7 @@ void MyQOpenglWidget::calRotation(QVector2D posOrgin, QVector2D posEnd)
     m_rotate=  QQuaternion::fromAxisAndAngle(axis, RotateAngle)*m_rotate;
 }
 
-QVector3D MyQOpenglWidget::pixelPosToViewPos(const QVector2D &p)
+QVector3D CloudWidget::pixelPosToViewPos(const QVector2D &p)
 {
     QVector3D viewPos(2.0 * float(p.x()) / width() - 1.0,  1.0 - 2.0 * float(p.y()) / height(), 0);
     float sqrZ = 1 - QVector3D::dotProduct(viewPos, viewPos);

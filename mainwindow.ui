@@ -10,91 +10,78 @@
     <height>1080</height>
    </rect>
   </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>1920</width>
-    <height>1080</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>1920</width>
-    <height>1080</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>AstraViewer</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="label_color">
-    <property name="geometry">
-     <rect>
-      <x>1080</x>
-      <y>10</y>
-      <width>640</width>
-      <height>480</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background:rgb(0, 0, 0);
-border:0.5px solid black </string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_depth">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>10</y>
-      <width>640</width>
-      <height>480</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background:rgb(0, 0, 0);
-border:0.5px solid black </string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_ir">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>520</y>
-      <width>640</width>
-      <height>480</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background:rgb(0, 0, 0);
-border:0.5px solid black </string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QOpenGLWidget" name="openGLWidget">
-    <property name="geometry">
-     <rect>
-      <x>1080</x>
-      <y>520</y>
-      <width>640</width>
-      <height>480</height>
-     </rect>
-    </property>
-   </widget>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="ImageWidget" name="openGLWidget_depth">
+      <property name="minimumSize">
+       <size>
+        <width>640</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>640</width>
+        <height>480</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="ImageWidget" name="openGLWidget_ir">
+      <property name="minimumSize">
+       <size>
+        <width>640</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>640</width>
+        <height>480</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="ImageWidget" name="openGLWidget_color">
+      <property name="minimumSize">
+       <size>
+        <width>640</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>640</width>
+        <height>480</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="CloudWidget" name="openGLWidget_points">
+      <property name="minimumSize">
+       <size>
+        <width>640</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>640</width>
+        <height>480</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
+  <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -103,7 +90,7 @@ border:0.5px solid black </string>
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="camera">
+   <widget class="QMenu" name="show">
     <property name="title">
      <string>    显示    </string>
     </property>
@@ -121,37 +108,35 @@ border:0.5px solid black </string>
     <addaction name="action_save_ir"/>
     <addaction name="action_save_points"/>
    </widget>
-   <addaction name="camera"/>
+   <addaction name="show"/>
    <addaction name="save"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <action name="action_show_color">
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="action_show_depth">
    <property name="text">
-    <string>彩色图 </string>
-   </property>
-  </action>
-  <action name="action_show_ir">
-   <property name="text">
-    <string>红外图</string>
-   </property>
-  </action>
-  <action name="action_save_depth">
-   <property name="text">
-    <string>深度图 </string>
+    <string>深度图</string>
    </property>
    <property name="shortcut">
     <string>D</string>
    </property>
   </action>
-  <action name="action_save_color">
+  <action name="action_show_color">
    <property name="text">
-    <string>彩色图</string>
+    <string>彩色图 </string>
    </property>
    <property name="shortcut">
-    <string>R</string>
+    <string>C</string>
    </property>
   </action>
-  <action name="action_save_ir">
+  <action name="action_show_ir">
    <property name="text">
     <string>红外图</string>
    </property>
@@ -159,9 +144,36 @@ border:0.5px solid black </string>
     <string>I</string>
    </property>
   </action>
-  <action name="action_d2c">
+  <action name="action_show_points">
    <property name="text">
-    <string>深度图对齐</string>
+    <string>点云</string>
+   </property>
+   <property name="shortcut">
+    <string>P</string>
+   </property>
+  </action>
+  <action name="action_save_depth">
+   <property name="text">
+    <string>深度图 </string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="action_save_color">
+   <property name="text">
+    <string>彩色图 </string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="action_save_ir">
+   <property name="text">
+    <string>红外图</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+I</string>
    </property>
   </action>
   <action name="action_save_points">
@@ -169,20 +181,23 @@ border:0.5px solid black </string>
     <string>点云</string>
    </property>
    <property name="shortcut">
-    <string>C</string>
-   </property>
-  </action>
-  <action name="action_show_points">
-   <property name="text">
-    <string>点云</string>
-   </property>
-  </action>
-  <action name="action_show_depth">
-   <property name="text">
-    <string>深度图</string>
+    <string>Ctrl+P</string>
    </property>
   </action>
  </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>ImageWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header location="global">imagewidget.h</header>
+  </customwidget>
+  <customwidget>
+   <class>CloudWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header>cloudwidget.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

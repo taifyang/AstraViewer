@@ -1,5 +1,5 @@
-#ifndef MYQOPENGLWIDGET_H
-#define MYQOPENGLWIDGET_H
+#ifndef CLOUDWIDGET_H
+#define CLOUDWIDGET_H
 
 #include <QtGui/QOpenGLFunctions>
 #include <QtWidgets/QOpenGLWidget>
@@ -46,12 +46,12 @@ struct BoundingBox
     QVector3D centerPoint;
 };
 
-class MyQOpenglWidget: public QOpenGLWidget, protected QOpenGLFunctions
+class CloudWidget: public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
 public:
-    explicit MyQOpenglWidget(QWidget *parent = 0);
-    ~MyQOpenglWidget();
+    explicit CloudWidget(QWidget *parent = 0);
+    ~CloudWidget();
     void showPointCloud(const std::vector<PointXYZRGB>& cloud);
     virtual void resizeGL(int w, int h);
     void setBackgroundColor(QVector3D color);
@@ -97,12 +97,14 @@ private:
     QVector<VertexInfo> m_PointsVertex;
 
     BoundingBox m_box;
+    QPixmap m_pixmap;
    
     QVector3D m_lineMove;
     QQuaternion m_rotate;
 	QVector3D m_rotationAxis;
     float m_scale;
     QVector2D m_lastPoint;
+
 
     GLuint createGPUProgram(QString nVertexShaderFile, QString nFragmentShaderFile);
     void GetShaderUniformPara();
@@ -120,6 +122,12 @@ private:
     void setMatrixUniform();
     void ResetView();
     void initCloud();
+
+//protected:
+//    void paintEvent(QPaintEvent *);
+
+public:
+    void setPixmap(QPixmap pixmap);
 };
 
-#endif // MYQOPENGLWIDGET_H
+#endif // CLOUDWIDGET_H

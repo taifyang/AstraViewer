@@ -16,13 +16,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    cloudwidget.cpp \
+    imagewidget.cpp \
     main.cpp \
-    mainwindow.cpp \
-    myqopenglwidget.cpp
+    mainwindow.cpp
 
 HEADERS += \
+    cloudwidget.h \
+    imagewidget.h \
     mainwindow.h \
-    myqopenglwidget.h \
     utils.h
 
 FORMS += \
@@ -39,3 +41,10 @@ LIBS += ./ThirdParty/OpenNI2/windows/x64-Release/*.lib
 
 INCLUDEPATH += ./ThirdParty/UvcSwapper/Include
 LIBS += ./ThirdParty/UvcSwapper/x64-Release/*.lib
+
+msvc {
+      QMAKE_CFLAGS += /utf-8
+      QMAKE_CXXFLAGS += /utf-8
+}
+
+RC_ICONS = icon.ico

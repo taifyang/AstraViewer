@@ -10,6 +10,7 @@
 #include <QWaitCondition>
 #include <QFile>
 #include <QTextStream>
+#include <QFileDialog>
 
 #include <OpenNI.h>
 #include <UVC_Swapper.h>
@@ -17,7 +18,7 @@
 #include <OBTypes.h>
 #include <ObCommon.h>
 
-#include "myqopenglwidget.h"
+#include "cloudwidget.h"
 
 extern std::vector<PointXYZRGB> g_points;
 
@@ -74,13 +75,9 @@ private slots:
 private:
     Ui::MainWindow *ui;
 
-    MyQOpenglWidget* openglwidget;
-
     PointsGenerate* points_generate;
 
     UVC_Swapper uvsSwapper;
-
-    //cv::VideoCapture capture;
 
     openni::Device device;
 

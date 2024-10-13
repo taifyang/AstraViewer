@@ -5,6 +5,7 @@
 
 #include <algorithm>
 
+
 void convertYUV422ToRGB888(const uint8_t* yuv, uint8_t* rgb, int width, int height)
 {
     for (int y = 0; y < height; y++)
